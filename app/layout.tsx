@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://venture-radar-ai.sites.openai.com'),
+  metadataBase: new URL('https://venture-radar-ai.starmanfarah.chatgpt.site'),
   title: 'VentureRadar AI — Opportunity Intelligence',
   description: 'Turn live web signals into validated, launch-ready venture opportunities.',
   openGraph: {
