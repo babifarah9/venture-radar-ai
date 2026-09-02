@@ -37,7 +37,7 @@ export default function Home() {
       <header className="sticky top-0 z-20 border-b border-white/8 bg-[#07110e]/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-5 lg:px-9">
           <div className="flex items-center gap-3"><div className="grid size-9 place-items-center rounded-xl bg-[#c7ff4a] text-[#07110e]"><Radar className="size-5" /></div><div><p className="font-heading text-sm font-semibold tracking-tight text-white">VentureRadar AI</p><p className="text-[10px] uppercase tracking-[.2em] text-[#8fa59d]">Opportunity intelligence</p></div></div>
-          <Badge className="border-[#c7ff4a]/25 bg-[#c7ff4a]/10 text-[#d8ff7d]" variant="outline"><span className="size-1.5 rounded-full bg-[#c7ff4a]" /> {analysis?.mode === 'live' ? `${analysis.intelligence === 'openai' ? 'AI + ' : ''}Live research` : 'Demo-ready'}</Badge>
+          <Badge className="border-[#c7ff4a]/25 bg-[#c7ff4a]/10 text-[#d8ff7d]" variant="outline"><span className="size-1.5 rounded-full bg-[#c7ff4a]" /> {analysis ? (analysis.mode === 'live' ? `${analysis.intelligence === 'openai' ? 'AI + ' : ''}Live research` : 'Analysis complete') : 'Research workspace'}</Badge>
         </div>
       </header>
 
