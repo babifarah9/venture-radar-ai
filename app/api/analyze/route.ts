@@ -49,15 +49,26 @@ async function enhanceWithOpenAI(base: VentureAnalysis): Promise<VentureAnalysis
     method: 'POST', signal: AbortSignal.timeout(25000),
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: process.env.OPENAI_MODEL || 'gpt-5-mini', store: false, max_output_tokens: 1400,
-      instructions: 'You are a rigorous venture analyst. Use only the supplied web evidence. Return valid JSON only, with no markdown. Avoid invented facts or numbers. Make the thesis specific, concise, and decision-useful.',
-      input: `Question: ${base.question}\n\nEvidence:\n${evidence}\n\nReturn this exact JSON shape: {"summary":"2-3 sentence evidence-grounded synthesis","verdict":"short verdict","gaps":["four specific gaps"],"concept":{"name":"short brand name","pitch":"one sentence","customer":"specific beachhead customer","businessModel":"specific model","moat":"credible compounding advantage"}}`,
+      model: process.env.OPENAI_MODEL || 'gpt-5-mini', store: false, max_output_tokens: 2400,
+      reasoning: { effort: 'low' },
+      text: { format: { type: 'json_schema', name: 'venture_thesis', strict: true, schema: {
+        type: 'object', additionalProperties: false, required: ['summary', 'verdict', 'gaps', 'concept'],
+        properties: {
+          summary: { type: 'string' }, verdict: { type: 'string' },
+          gaps: { type: 'array', minItems: 4, maxItems: 4, items: { type: 'string' } },
+          concept: { type: 'object', additionalProperties: false, required: ['name', 'pitch', 'customer', 'businessModel', 'moat'], properties: {
+            name: { type: 'string' }, pitch: { type: 'string' }, customer: { type: 'string' }, businessModel: { type: 'string' }, moat: { type: 'string' },
+          } },
+        },
+      } } },
+      instructions: 'You are a rigorous venture analyst. Use only the supplied web evidence. Avoid invented facts or numbers. Make the thesis specific, concise, and decision-useful.',
+      input: `Question: ${base.question}\n\nEvidence:\n${evidence}\n\nProduce a 2–3 sentence evidence-grounded summary, a short verdict, exactly four specific gaps, and a focused venture concept.`,
     }),
   });
   if (!response.ok) throw new Error(`OpenAI returned ${response.status}`);
   const data = await response.json() as { output_text?: string; output?: { content?: { type?: string; text?: string }[] }[] };
   const text = data.output_text || data.output?.flatMap((o) => o.content || []).find((c) => c.type === 'output_text')?.text;
-  if (!text) throw new Error('OpenAI returned no text');
+  if (!text) throw new Error('OpenAI returned no completed text');
   const patch = JSON.parse(text) as Partial<Pick<VentureAnalysis, 'summary' | 'verdict' | 'gaps' | 'concept'>>;
   return { ...base, ...patch, concept: { ...base.concept, ...(patch.concept || {}) }, intelligence: 'openai' };
 }
