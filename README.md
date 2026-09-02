@@ -7,7 +7,8 @@ Built from scratch for the **DEVNetwork API + Cloud + AI Hackathon 2026**.
 ## What the MVP demonstrates
 
 - SerpApi-powered research across demand, competitors, and adoption barriers
-- Name.com Domain API availability checks for generated brand ideas
+- Name.com Domain API search, availability validation, and live registration pricing
+- OpenAI Responses API synthesis grounded exclusively in SerpApi evidence
 - A transparent opportunity score across demand, white space, timing, and feasibility
 - A polished, responsive decision brief with linked research sources
 - Automatic mock fallbacks, so the full demo works without credentials
@@ -29,6 +30,8 @@ The app works immediately in demo mode. Add credentials to `.env.local` to enabl
 
 ```dotenv
 SERPAPI_API_KEY=your_serpapi_key
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_MODEL=gpt-5-mini
 NAMECOM_USERNAME=your_name.com_username
 NAMECOM_API_TOKEN=your_name.com_api_token
 ```
@@ -36,7 +39,7 @@ NAMECOM_API_TOKEN=your_name.com_api_token
 For Name.com's sandbox, also set:
 
 ```dotenv
-NAMECOM_API_BASE_URL=https://api.dev.name.com/v4
+NAMECOM_API_BASE_URL=https://api.dev.name.com/core/v1
 ```
 
 Never commit `.env.local` or API credentials.
@@ -52,7 +55,7 @@ For the strongest demo, begin with prompt 1, point out the live/demo status badg
 
 ## Architecture
 
-The browser sends a question to `POST /api/analyze`. The server runs three targeted SerpApi searches in parallel and normalizes the organic results into a common evidence model. It derives a reproducible opportunity brief and checks generated domains through Name.com. Each integration fails independently and falls back safely, keeping the demo available even if a provider is slow or unconfigured.
+The browser sends a question to `POST /api/analyze`. The server runs three targeted SerpApi searches in parallel and normalizes the organic results into a common evidence model. OpenAI's Responses API turns that evidence into a focused thesis without introducing unsupported facts. Name.com then searches brand terms, validates registration availability, and returns pricing. Each integration fails independently and falls back safely, keeping the demo available even if a provider is slow or unconfigured.
 
 Key files:
 
@@ -67,7 +70,7 @@ Key files:
 npm run build
 ```
 
-This project is configured for OpenAI Sites / Cloudflare-compatible deployment. Deploy through Sites and add `SERPAPI_API_KEY`, `NAMECOM_USERNAME`, and `NAMECOM_API_TOKEN` as encrypted production environment variables. The generated worker uses HTTP APIs only and requires no database.
+This project is configured for OpenAI Sites / Cloudflare-compatible deployment. Deploy through Sites and add `SERPAPI_API_KEY`, `OPENAI_API_KEY`, `NAMECOM_USERNAME`, and `NAMECOM_API_TOKEN` as encrypted production environment variables. The generated worker uses HTTP APIs only and requires no database.
 
 For another Cloudflare Workers deployment flow, deploy the generated worker output with Wrangler after building, then configure the same secrets in that environment.
 

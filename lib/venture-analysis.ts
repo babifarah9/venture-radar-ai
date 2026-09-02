@@ -6,9 +6,9 @@ export type VentureAnalysis = {
   competitors: { name: string; positioning: string; signal: string; url?: string }[];
   gaps: string[];
   concept: { name: string; pitch: string; customer: string; businessModel: string; moat: string };
-  domains: { domain: string; available: boolean | null; source: 'name.com' | 'suggested' }[];
+  domains: { domain: string; available: boolean | null; source: 'name.com' | 'suggested'; purchasePrice?: number; renewalPrice?: number; premium?: boolean }[];
   launchPlan: { phase: string; timing: string; actions: string[]; proof: string }[];
-  sources: ResearchSource[]; mode: 'live' | 'demo'; generatedAt: string;
+  sources: ResearchSource[]; mode: 'live' | 'demo'; intelligence: 'openai' | 'heuristic'; generatedAt: string;
 };
 
 const STOP = new Set('could there be a the an for in on of to and or with is are market business technology commercial opportunity how can should we build from into using'.split(' '));
@@ -67,11 +67,11 @@ export function synthesize(question: string, sources: ResearchSource[], domains:
       { phase: 'Pilot', timing: 'Weeks 2–4', actions: ['Build one outcome-focused workflow', 'Recruit two design partners', 'Measure time, cost, or revenue lift'], proof: 'One customer agrees to pay for the pilot' },
       { phase: 'Launch', timing: 'Weeks 5–8', actions: ['Publish a quantified case study', 'Launch targeted outbound and content', 'Convert pilot into annual contract'], proof: '3 qualified opportunities and first recurring revenue' },
     ],
-    sources, mode: live ? 'live' : 'demo', generatedAt: new Date().toISOString(),
+    sources, mode: live ? 'live' : 'demo', intelligence: 'heuristic', generatedAt: new Date().toISOString(),
   };
 }
 
 export function domainIdeas(question: string) {
   const root = cleanName(keywords(question).slice(0, 2).join('')) || 'venturepilot';
-  return [`${root}.com`, `get${root}.com`, `${root}hq.com`, `${root}.ai`];
+  return [`${root}.com`, `get${root}.com`, `${root}hq.com`, `${root}.ai`, `try${root}.com`, `${root}.io`];
 }
