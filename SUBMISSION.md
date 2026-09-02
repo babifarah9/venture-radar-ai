@@ -64,6 +64,14 @@ SerpApi, Name.com Core API, OpenAI Responses API, React, TypeScript, Vinext, Tai
 - Live application: https://venture-radar-ai.starmanfarah.chatgpt.site
 - Source repository: https://github.com/babifarah9/venture-radar-ai
 
+## Devpost media
+
+- Thumbnail (recommended 3:2 crop): `public/devpost-thumbnail-3x2.png`
+- Question workspace: `public/devpost/01-question-workspace.png`
+- Live opportunity score: `public/devpost/02-opportunity-score.png`
+- Market gaps, venture, and domains: `public/devpost/03-market-gaps.png`
+- Eight-week launch plan and evidence trail: `public/devpost/04-launch-plan.png`
+
 ## Challenges to select
 
 - DevNetwork Overall Winner
