@@ -4,6 +4,8 @@ VentureRadar AI turns a business or technology question into an evidence-backed 
 
 Built from scratch for the **DEVNetwork API + Cloud + AI Hackathon 2026**.
 
+**Live demo:** https://venture-radar-ai.starmanfarah.chatgpt.site
+
 ## What the MVP demonstrates
 
 - SerpApi-powered research across demand, competitors, and adoption barriers

@@ -62,7 +62,7 @@ SerpApi, Name.com Core API, OpenAI Responses API, React, TypeScript, Vinext, Tai
 ## Links
 
 - Live application: https://venture-radar-ai.starmanfarah.chatgpt.site
-- Source repository: add the public or judge-shared repository URL before submission
+- Source repository: https://github.com/babifarah9/venture-radar-ai
 
 ## Challenges to select
 
